@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/api/ai";
-const CHATS_URL = "http://localhost:5000/api/chats";
+const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/ai`;
+const CHATS_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/chats`;
 
 const welcomeMessage = {
   role: "assistant",
