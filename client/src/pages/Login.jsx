@@ -3,7 +3,9 @@ import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CareerPilotIntro from "../components/CareerPilotIntro";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? "" : "http://localhost:5000");
 
 export default function Login() {
   const navigate = useNavigate();
