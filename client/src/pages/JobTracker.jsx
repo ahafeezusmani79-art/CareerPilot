@@ -28,14 +28,14 @@ const EMPTY_FORM = {
 };
 
 const STATUS_STYLES = {
-  Applied: "border-blue-400/20 bg-blue-400/10 text-blue-300",
-  Interview: "border-amber-400/20 bg-amber-400/10 text-amber-300",
-  Offer: "border-emerald-400/20 bg-emerald-400/10 text-emerald-300",
-  Rejected: "border-rose-400/20 bg-rose-400/10 text-rose-300",
+  Applied: "border-blue-400/20 bg-blue-400/[0.08] text-blue-300",
+  Interview: "border-amber-400/20 bg-amber-400/[0.08] text-amber-300",
+  Offer: "border-emerald-400/20 bg-emerald-400/[0.08] text-emerald-300",
+  Rejected: "border-rose-400/20 bg-rose-400/[0.08] text-rose-300",
 };
 
 const inputClass =
-  "w-full rounded-xl border border-white/[0.10] bg-[#0e1320] px-3.5 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-violet-400/60 focus:ring-4 focus:ring-violet-500/10 disabled:cursor-not-allowed disabled:opacity-50";
+  "w-full rounded-xl border border-white/[0.09] bg-[#090E1B] px-4 py-3.5 text-sm text-slate-100 outline-none shadow-inner shadow-black/20 transition duration-200 placeholder:text-slate-600 hover:border-violet-400/25 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-400/10 disabled:cursor-not-allowed disabled:opacity-50";
 
 async function apiRequest(path, options = {}) {
   const response = await fetch(`${API_URL}${path}`, {
@@ -90,7 +90,7 @@ function Panel({ children, className = "", id }) {
   return (
     <section
       id={id}
-      className={`rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#171d2c] to-[#111522] p-5 shadow-lg shadow-black/10 sm:p-7 ${className}`}
+      className={`rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#151C2D] to-[#0D1321] p-5 shadow-xl shadow-black/20 sm:p-7 ${className}`}
     >
       {children}
     </section>
@@ -100,24 +100,28 @@ function Panel({ children, className = "", id }) {
 function StatCard({ label, value, description, color, icon }) {
   const styles = {
     blue: {
-      icon: "bg-blue-400/10 text-blue-300",
+      icon: "border-blue-400/15 bg-blue-400/[0.08] text-blue-300",
       number: "text-blue-200",
       glow: "group-hover:border-blue-400/30",
+      light: "bg-blue-500/[0.08]",
     },
     violet: {
-      icon: "bg-violet-400/10 text-violet-300",
+      icon: "border-violet-400/15 bg-violet-400/[0.08] text-violet-300",
       number: "text-violet-200",
       glow: "group-hover:border-violet-400/30",
+      light: "bg-violet-500/[0.10]",
     },
     emerald: {
-      icon: "bg-emerald-400/10 text-emerald-300",
+      icon: "border-emerald-400/15 bg-emerald-400/[0.08] text-emerald-300",
       number: "text-emerald-200",
       glow: "group-hover:border-emerald-400/30",
+      light: "bg-emerald-500/[0.08]",
     },
     rose: {
-      icon: "bg-rose-400/10 text-rose-300",
+      icon: "border-rose-400/15 bg-rose-400/[0.08] text-rose-300",
       number: "text-rose-200",
       glow: "group-hover:border-rose-400/30",
+      light: "bg-rose-500/[0.08]",
     },
   };
 
@@ -125,12 +129,16 @@ function StatCard({ label, value, description, color, icon }) {
 
   return (
     <div
-      className={`group rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#192031] to-[#111522] p-5 transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20 ${style.glow}`}
+      className={`group relative isolate overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#192236] to-[#101625] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/25 ${style.glow}`}
     >
+      <div
+        className={`pointer-events-none absolute -right-10 -top-10 -z-10 h-32 w-32 rounded-full blur-3xl ${style.light}`}
+      />
+
       <div className="flex items-start justify-between gap-3">
         <p className="text-sm font-medium text-slate-400">{label}</p>
         <span
-          className={`flex h-10 w-10 items-center justify-center rounded-xl text-xl ${style.icon}`}
+          className={`flex h-11 w-11 items-center justify-center rounded-xl border text-xl shadow-inner shadow-white/[0.02] ${style.icon}`}
           aria-hidden="true"
         >
           {icon}
@@ -138,12 +146,32 @@ function StatCard({ label, value, description, color, icon }) {
       </div>
 
       <p
-        className={`mt-5 text-4xl font-bold tracking-tight tabular-nums ${style.number}`}
+        className={`mt-5 text-4xl font-extrabold tracking-tight tabular-nums ${style.number}`}
       >
         {value}
       </p>
 
       <p className="mt-2 text-xs leading-5 text-slate-500">{description}</p>
+    </div>
+  );
+}
+
+function SectionTitle({ eyebrow, title, description }) {
+  return (
+    <div>
+      {eyebrow && (
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-violet-300">
+          {eyebrow}
+        </p>
+      )}
+      <h2 className="mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl">
+        {title}
+      </h2>
+      {description && (
+        <p className="mt-2 text-sm leading-6 text-slate-400">
+          {description}
+        </p>
+      )}
     </div>
   );
 }
@@ -345,37 +373,78 @@ export default function JobTracker() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0e17] text-slate-100">
+    <div className="min-h-screen bg-[#080B16] text-slate-100">
       <main className="mx-auto max-w-7xl space-y-8 px-4 py-7 sm:px-6 sm:py-9 lg:px-8">
-        <header className="flex flex-col justify-between gap-5 border-b border-white/[0.08] pb-6 sm:flex-row sm:items-center">
-          <div>
-            <p className="text-sm text-slate-400">
-              Your personal career workspace
-            </p>
-            <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-              Job Tracker
-            </h1>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-400">
-              Organize your applications, follow your progress, and stay ready
-              for your next opportunity.
-            </p>
-          </div>
+        {/* Hero */}
+        <header className="relative isolate overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#19172F] via-[#111729] to-[#0C1423] p-6 shadow-2xl shadow-black/20 sm:p-8 lg:p-9">
+          <div className="pointer-events-none absolute -right-20 -top-28 -z-10 h-80 w-80 rounded-full bg-violet-600/[0.14] blur-[90px]" />
+          <div className="pointer-events-none absolute -bottom-32 right-1/3 -z-10 h-64 w-64 rounded-full bg-sky-500/[0.09] blur-[80px]" />
 
-          <button
-            type="button"
-            onClick={() => {
-              resetForm();
-              setError("");
-              setNotice("");
-              scrollToForm();
-            }}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-950/30 transition hover:-translate-y-0.5 hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-violet-500/20"
-          >
-            <span className="text-lg leading-none">+</span>
-            Add application
-          </button>
+          <div className="relative flex flex-col justify-between gap-7 lg:flex-row lg:items-center">
+            <div className="max-w-2xl">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/[0.08] px-3.5 py-2 text-[11px] font-bold tracking-[0.16em] text-violet-300">
+                <span aria-hidden="true">✦</span>
+                CAREERPILOT CAREER WORKSPACE
+              </div>
+
+              <p className="text-sm font-medium text-slate-400">
+                Your personal career workspace
+              </p>
+
+              <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                Job{" "}
+                <span className="bg-gradient-to-r from-violet-400 via-purple-300 to-sky-400 bg-clip-text text-transparent">
+                  Tracker.
+                </span>
+              </h1>
+
+              <p className="mt-3 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
+                Organize your applications, follow your progress, and stay
+                ready for your next opportunity.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-3 text-xs text-slate-400">
+                <span className="rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2">
+                  <span className="mr-2 text-violet-300">✦</span>
+                  Track progress
+                </span>
+                <span className="rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2">
+                  <span className="mr-2 text-sky-300">⌕</span>
+                  Find applications
+                </span>
+                <span className="rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2">
+                  <span className="mr-2 text-emerald-300">✓</span>
+                  Stay organized
+                </span>
+              </div>
+            </div>
+
+            <div className="flex w-full flex-col gap-3 lg:max-w-[220px]">
+              <button
+                type="button"
+                onClick={() => {
+                  resetForm();
+                  setError("");
+                  setNotice("");
+                  scrollToForm();
+                }}
+                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 via-violet-500 to-indigo-500 px-5 py-4 text-sm font-bold text-white shadow-lg shadow-violet-950/30 transition duration-300 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-xl hover:shadow-violet-900/30 focus:outline-none focus:ring-2 focus:ring-violet-400/40"
+              >
+                <span className="text-xl leading-none">+</span>
+                Add application
+                <span className="ml-1 transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </button>
+
+              <p className="text-center text-xs leading-5 text-slate-500">
+                Keep every opportunity in one place.
+              </p>
+            </div>
+          </div>
         </header>
 
+        {/* Notifications */}
         {error && (
           <div
             role="alert"
@@ -410,183 +479,215 @@ export default function JobTracker() {
           </div>
         )}
 
-        <section
-          aria-label="Application statistics"
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
-        >
-          <StatCard
-            label="Total applications"
-            value={loading ? "—" : stats.total}
-            description="All tracked opportunities"
-            icon="▤"
-            color="blue"
-          />
-          <StatCard
-            label="Interviews"
-            value={loading ? "—" : stats.interviews}
-            description="Opportunities to shine"
-            icon="✧"
-            color="violet"
-          />
-          <StatCard
-            label="Offers"
-            value={loading ? "—" : stats.offers}
-            description="Potential next steps"
-            icon="↗"
-            color="emerald"
-          />
-          <StatCard
-            label="Rejected"
-            value={loading ? "—" : stats.rejected}
-            description="Keep moving forward"
-            icon="×"
-            color="rose"
-          />
-        </section>
-
-        <Panel id="job-form" className="scroll-mt-6">
-          <div className="mb-6">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-violet-300">
-              APPLICATION DETAILS
-            </p>
-            <h2 className="mt-2 text-xl font-bold text-white">
-              {editingId ? "Edit application" : "Add a job application"}
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
-              {editingId
-                ? "Update the details of this opportunity."
-                : "Record a new opportunity and keep everything organized."}
-            </p>
+        {/* Statistics */}
+        <section aria-label="Application statistics">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-violet-300">
+                YOUR OVERVIEW
+              </p>
+              <h2 className="mt-1 text-lg font-bold text-white">
+                Application statistics
+              </h2>
+            </div>
+            <span className="rounded-lg border border-white/[0.07] bg-white/[0.025] px-3 py-2 text-xs text-slate-500">
+              Live overview
+            </span>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <Field label="Company name *">
-                <input
-                  className={inputClass}
-                  name="company"
-                  value={form.company}
-                  onChange={updateField}
-                  placeholder="e.g. Google"
-                  maxLength={100}
-                  required
-                />
-              </Field>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <StatCard
+              label="Total applications"
+              value={loading ? "—" : stats.total}
+              description="All tracked opportunities"
+              icon="▤"
+              color="blue"
+            />
+            <StatCard
+              label="Interviews"
+              value={loading ? "—" : stats.interviews}
+              description="Opportunities to shine"
+              icon="✧"
+              color="violet"
+            />
+            <StatCard
+              label="Offers"
+              value={loading ? "—" : stats.offers}
+              description="Potential next steps"
+              icon="↗"
+              color="emerald"
+            />
+            <StatCard
+              label="Rejected"
+              value={loading ? "—" : stats.rejected}
+              description="Keep moving forward"
+              icon="×"
+              color="rose"
+            />
+          </div>
+        </section>
 
-              <Field label="Job position *">
-                <input
-                  className={inputClass}
-                  name="position"
-                  value={form.position}
-                  onChange={updateField}
-                  placeholder="e.g. Frontend Developer"
-                  maxLength={100}
-                  required
-                />
-              </Field>
+        {/* Application form */}
+        <Panel id="job-form" className="scroll-mt-6">
+          <div className="mb-7 flex items-center gap-4 border-b border-white/[0.07] pb-6">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-violet-400/20 bg-violet-400/[0.08] text-xl text-violet-300">
+              ✎
+            </div>
+            <SectionTitle
+              eyebrow="APPLICATION DETAILS"
+              title={editingId ? "Edit application" : "Add a job application"}
+              description={
+                editingId
+                  ? "Update the details of this opportunity."
+                  : "Record a new opportunity and keep everything organized."
+              }
+            />
+          </div>
 
-              <Field label="Location">
-                <input
-                  className={inputClass}
-                  name="location"
-                  value={form.location}
-                  onChange={updateField}
-                  placeholder="e.g. Karachi or Remote"
-                  maxLength={150}
-                />
-              </Field>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Company information
+              </p>
 
-              <Field label="Job type">
-                <select
-                  className={inputClass}
-                  name="jobType"
-                  value={form.jobType}
-                  onChange={updateField}
-                >
-                  <option className="bg-[#111522]" value="">
-                    Select job type
-                  </option>
-                  {JOB_TYPES.map((type) => (
-                    <option className="bg-[#111522]" key={type} value={type}>
-                      {type}
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                <Field label="Company name *">
+                  <input
+                    className={inputClass}
+                    name="company"
+                    value={form.company}
+                    onChange={updateField}
+                    placeholder="e.g. Google"
+                    maxLength={100}
+                    required
+                  />
+                </Field>
+
+                <Field label="Job position *">
+                  <input
+                    className={inputClass}
+                    name="position"
+                    value={form.position}
+                    onChange={updateField}
+                    placeholder="e.g. Frontend Developer"
+                    maxLength={100}
+                    required
+                  />
+                </Field>
+
+                <Field label="Location">
+                  <input
+                    className={inputClass}
+                    name="location"
+                    value={form.location}
+                    onChange={updateField}
+                    placeholder="e.g. Karachi or Remote"
+                    maxLength={150}
+                  />
+                </Field>
+              </div>
+            </div>
+
+            <div className="border-t border-white/[0.06] pt-6">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Application information
+              </p>
+
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                <Field label="Job type">
+                  <select
+                    className={inputClass}
+                    name="jobType"
+                    value={form.jobType}
+                    onChange={updateField}
+                  >
+                    <option className="bg-[#111522]" value="">
+                      Select job type
                     </option>
-                  ))}
-                </select>
-              </Field>
+                    {JOB_TYPES.map((type) => (
+                      <option className="bg-[#111522]" key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
 
-              <Field label="Application status">
-                <select
-                  className={inputClass}
-                  name="status"
-                  value={form.status}
-                  onChange={updateField}
-                >
-                  {STATUSES.map((status) => (
-                    <option
-                      className="bg-[#111522]"
-                      key={status}
-                      value={status}
-                    >
-                      {status}
-                    </option>
-                  ))}
-                </select>
-              </Field>
+                <Field label="Application status">
+                  <select
+                    className={inputClass}
+                    name="status"
+                    value={form.status}
+                    onChange={updateField}
+                  >
+                    {STATUSES.map((status) => (
+                      <option
+                        className="bg-[#111522]"
+                        key={status}
+                        value={status}
+                      >
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
 
-              <Field label="Application date">
-                <input
-                  className={inputClass}
-                  type="date"
-                  name="appliedDate"
-                  value={form.appliedDate}
-                  onChange={updateField}
-                  required
-                />
-              </Field>
+                <Field label="Application date">
+                  <input
+                    className={inputClass}
+                    type="date"
+                    name="appliedDate"
+                    value={form.appliedDate}
+                    onChange={updateField}
+                    required
+                  />
+                </Field>
 
-              <Field label="Salary">
-                <input
-                  className={inputClass}
-                  name="salary"
-                  value={form.salary}
-                  onChange={updateField}
-                  placeholder="e.g. PKR 80,000/month"
-                  maxLength={100}
-                />
-              </Field>
+                <Field label="Salary">
+                  <input
+                    className={inputClass}
+                    name="salary"
+                    value={form.salary}
+                    onChange={updateField}
+                    placeholder="e.g. PKR 80,000/month"
+                    maxLength={100}
+                  />
+                </Field>
 
-              <Field label="Job posting URL">
-                <input
-                  className={inputClass}
-                  type="url"
-                  name="jobUrl"
-                  value={form.jobUrl}
+                <Field label="Job posting URL" className="sm:col-span-2">
+                  <input
+                    className={inputClass}
+                    type="url"
+                    name="jobUrl"
+                    value={form.jobUrl}
+                    onChange={updateField}
+                    placeholder="https://..."
+                    maxLength={500}
+                  />
+                </Field>
+              </div>
+            </div>
+
+            <div className="border-t border-white/[0.06] pt-6">
+              <Field label="Notes">
+                <textarea
+                  className={`${inputClass} min-h-28 resize-y`}
+                  name="notes"
+                  value={form.notes}
                   onChange={updateField}
-                  placeholder="https://..."
-                  maxLength={500}
+                  placeholder="Recruiter details, interview preparation, follow-up reminders..."
+                  maxLength={2000}
+                  rows={3}
                 />
               </Field>
             </div>
 
-            <Field label="Notes">
-              <textarea
-                className={`${inputClass} min-h-28 resize-y`}
-                name="notes"
-                value={form.notes}
-                onChange={updateField}
-                placeholder="Recruiter details, interview preparation, follow-up reminders..."
-                maxLength={2000}
-                rows={3}
-              />
-            </Field>
-
-            <div className="flex flex-col gap-3 border-t border-white/[0.08] pt-5 sm:flex-row sm:justify-end">
+            <div className="flex flex-col gap-3 border-t border-white/[0.08] pt-6 sm:flex-row sm:justify-end">
               {editingId && (
                 <button
                   type="button"
                   onClick={resetForm}
                   disabled={saving}
-                  className="rounded-xl border border-white/[0.12] px-5 py-3 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.05] disabled:opacity-50"
+                  className="rounded-xl border border-white/[0.12] bg-white/[0.02] px-5 py-3 text-sm font-semibold text-slate-300 transition duration-200 hover:border-white/20 hover:bg-white/[0.05] disabled:opacity-50"
                 >
                   Cancel edit
                 </button>
@@ -595,42 +696,48 @@ export default function JobTracker() {
               <button
                 type="submit"
                 disabled={saving}
-                className="rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-950/20 transition hover:-translate-y-0.5 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-950/25 transition duration-300 hover:-translate-y-0.5 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {saving
                   ? "Saving..."
                   : editingId
                     ? "Save changes"
                     : "Save application"}
+                {!saving && <span aria-hidden="true">→</span>}
               </button>
             </div>
           </form>
         </Panel>
 
+        {/* Application pipeline */}
         <section className="space-y-5">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-violet-300">
-              YOUR PIPELINE
-            </p>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white">
-              Your applications
-            </h2>
-            <p className="mt-2 text-sm text-slate-400">
-              Review and manage every opportunity in your pipeline.
-            </p>
-          </div>
+          <SectionTitle
+            eyebrow="YOUR PIPELINE"
+            title="Your applications"
+            description="Review and manage every opportunity in your pipeline."
+          />
 
+          {/* Search and filters */}
           <Panel className="!p-4 sm:!p-5">
+            <div className="mb-4 flex items-center gap-2">
+              <span className="text-violet-300" aria-hidden="true">
+                ⌕
+              </span>
+              <h3 className="text-sm font-semibold text-slate-200">
+                Find an application
+              </h3>
+            </div>
+
             <div className="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_200px_200px]">
               <div className="relative">
                 <span
-                  className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-lg text-slate-500"
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-500"
                   aria-hidden="true"
                 >
                   ⌕
                 </span>
                 <input
-                  className={`${inputClass} pl-10`}
+                  className={`${inputClass} pl-11`}
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Search company, position, location..."
@@ -681,17 +788,17 @@ export default function JobTracker() {
 
           {loading ? (
             <Panel className="py-16 text-center">
-              <div className="mx-auto h-9 w-9 animate-spin rounded-full border-2 border-violet-400/25 border-t-violet-400" />
+              <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-violet-400/15 border-t-violet-400 shadow-lg shadow-violet-500/10" />
               <p className="mt-4 text-sm text-slate-400">
                 Loading your applications...
               </p>
             </Panel>
           ) : filteredJobs.length === 0 ? (
-            <Panel className="border-dashed !bg-[#111522] py-16 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-violet-400/15 bg-violet-400/[0.08] text-3xl text-violet-300">
+            <Panel className="border-dashed !bg-[#111522]/80 py-16 text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-violet-400/15 bg-violet-400/[0.08] text-3xl text-violet-300 shadow-inner shadow-violet-400/[0.04]">
                 ↗
               </div>
-              <h3 className="mt-4 text-lg font-bold text-white">
+              <h3 className="mt-5 text-lg font-bold text-white">
                 {jobs.length === 0
                   ? "Your journey starts here"
                   : "No matching applications"}
@@ -705,30 +812,48 @@ export default function JobTracker() {
                 <button
                   type="button"
                   onClick={scrollToForm}
-                  className="mt-5 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110"
+                  className="mt-6 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-950/20 transition hover:-translate-y-0.5 hover:brightness-110"
                 >
-                  Add your first application
+                  + Add your first application
                 </button>
               )}
             </Panel>
           ) : (
             <>
-              <p className="text-sm text-slate-400">
-                Showing{" "}
-                <span className="font-semibold text-slate-200">
-                  {filteredJobs.length}
-                </span>{" "}
-                of {jobs.length} application{jobs.length === 1 ? "" : "s"}
-              </p>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="text-sm text-slate-400">
+                  Showing{" "}
+                  <span className="font-semibold text-slate-200">
+                    {filteredJobs.length}
+                  </span>{" "}
+                  of {jobs.length} application{jobs.length === 1 ? "" : "s"}
+                </p>
+
+                {(search || statusFilter !== "All" || typeFilter !== "All") && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearch("");
+                      setStatusFilter("All");
+                      setTypeFilter("All");
+                    }}
+                    className="text-xs font-semibold text-violet-300 transition hover:text-violet-200"
+                  >
+                    Clear filters
+                  </button>
+                )}
+              </div>
 
               <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                 {filteredJobs.map((job) => (
                   <article
                     key={job._id}
-                    className="group rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#192031] to-[#111522] p-5 shadow-lg shadow-black/10 transition duration-200 hover:-translate-y-0.5 hover:border-violet-400/30 hover:shadow-xl hover:shadow-black/20 sm:p-6"
+                    className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#192236] to-[#101625] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-violet-400/25 hover:shadow-xl hover:shadow-black/25 sm:p-6"
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-violet-400/10 bg-gradient-to-br from-violet-400/15 to-blue-400/10 text-lg font-bold text-violet-200">
+                    <div className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-violet-500/[0.05] blur-3xl transition duration-300 group-hover:bg-violet-500/[0.10]" />
+
+                    <div className="relative flex items-start gap-3">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-violet-400/15 bg-gradient-to-br from-violet-400/15 to-sky-400/[0.06] text-lg font-bold text-violet-200 shadow-inner shadow-violet-300/[0.04]">
                         {(job.company || "?").charAt(0).toUpperCase()}
                       </div>
 
@@ -742,16 +867,13 @@ export default function JobTracker() {
                       </div>
 
                       <span
-                        className={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-semibold ${
-                          STATUS_STYLES[job.status] ||
-                          "border-white/10 bg-white/5 text-slate-300"
-                        }`}
+                        className={`shrink-0 rounded-full border px-2.5 py-1.5 text-[11px] font-bold ${STATUS_STYLES[job.status] || "border-white/10 bg-white/5 text-slate-300"}`}
                       >
                         {job.status}
                       </span>
                     </div>
 
-                    <div className="mt-5 grid grid-cols-2 gap-3">
+                    <div className="relative mt-5 grid grid-cols-2 gap-3">
                       {[
                         {
                           label: "Location",
@@ -772,12 +894,12 @@ export default function JobTracker() {
                       ].map((item) => (
                         <div
                           key={item.label}
-                          className="rounded-xl border border-white/[0.05] bg-white/[0.025] p-3"
+                          className="rounded-xl border border-white/[0.06] bg-[#090E1B]/55 p-3.5 shadow-inner shadow-black/10"
                         >
-                          <p className="text-xs text-slate-500">
+                          <p className="text-[11px] font-medium uppercase tracking-wider text-slate-500">
                             {item.label}
                           </p>
-                          <p className="mt-1 break-words text-sm font-medium text-slate-200">
+                          <p className="mt-2 break-words text-sm font-semibold text-slate-200">
                             {item.value}
                           </p>
                         </div>
@@ -785,8 +907,8 @@ export default function JobTracker() {
                     </div>
 
                     {job.notes && (
-                      <div className="mt-4 rounded-xl border border-white/[0.05] bg-black/10 p-3">
-                        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                      <div className="relative mt-4 rounded-xl border border-white/[0.06] bg-[#090E1B]/40 p-3.5">
+                        <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-500">
                           Notes
                         </p>
                         <p className="whitespace-pre-wrap break-words text-sm leading-6 text-slate-300">
@@ -800,15 +922,15 @@ export default function JobTracker() {
                         href={job.jobUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-violet-300 transition hover:text-violet-200 hover:underline"
+                        className="relative mt-4 inline-flex items-center gap-2 text-sm font-semibold text-violet-300 transition hover:text-violet-200 hover:underline"
                       >
                         View job posting <span aria-hidden="true">↗</span>
                       </a>
                     )}
 
-                    <div className="mt-5 border-t border-white/[0.08] pt-4">
+                    <div className="relative mt-5 border-t border-white/[0.07] pt-5">
                       <label
-                        className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-slate-500"
+                        className="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500"
                         htmlFor={`status-${job._id}`}
                       >
                         Update status
@@ -842,12 +964,12 @@ export default function JobTracker() {
                         </p>
                       )}
 
-                      <div className="mt-3 flex flex-wrap gap-2">
+                      <div className="mt-4 flex flex-wrap gap-2">
                         <button
                           type="button"
                           onClick={() => startEditing(job)}
                           disabled={deletingId === job._id}
-                          className="rounded-xl border border-white/[0.12] px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-violet-400/30 hover:bg-violet-400/[0.08] hover:text-violet-200 disabled:opacity-50"
+                          className="rounded-xl border border-white/[0.10] bg-white/[0.02] px-4 py-2.5 text-sm font-semibold text-slate-300 transition duration-200 hover:border-violet-400/30 hover:bg-violet-400/[0.08] hover:text-violet-200 disabled:opacity-50"
                         >
                           Edit application
                         </button>
@@ -859,7 +981,7 @@ export default function JobTracker() {
                             deletingId === job._id ||
                             updatingId === job._id
                           }
-                          className="rounded-xl border border-rose-400/20 px-4 py-2 text-sm font-semibold text-rose-300 transition hover:bg-rose-400/[0.08] disabled:opacity-50"
+                          className="rounded-xl border border-rose-400/20 bg-rose-400/[0.025] px-4 py-2.5 text-sm font-semibold text-rose-300 transition duration-200 hover:bg-rose-400/[0.09] disabled:opacity-50"
                         >
                           {deletingId === job._id ? "Deleting..." : "Delete"}
                         </button>
@@ -872,6 +994,7 @@ export default function JobTracker() {
           )}
         </section>
 
+        {/* Footer */}
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.08] py-6 text-sm text-slate-500">
           <p>CareerPilot · Every application is a step forward.</p>
           <span className="text-xs text-slate-600">

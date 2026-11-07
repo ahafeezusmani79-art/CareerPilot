@@ -2,36 +2,53 @@
 @import "tailwindcss";
 
 /* ========================================
-   CAREERPILOT — PREMIUM RESPONSIVE DESIGN
-   Dark Navy + Violet
+   CAREERPILOT — FUTURISTIC NEUMORPHIC UI
+   Midnight Black + Violet Glow
 ======================================== */
 
 :root {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  color: #f1f5f9;
-  background: #080b16;
+  color: #f1f0ff;
+  background: #090a12;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --cp-bg: #080b16;
-  --cp-surface: #0e1324;
-  --cp-card: #11182b;
-  --cp-border: rgba(148, 163, 184, 0.14);
-  --cp-text: #f1f5f9;
-  --cp-muted: #94a3b8;
-  --cp-violet: #8b5cf6;
-  --cp-purple: #a78bfa;
-  --cp-cyan: #67e8f9;
-  --cp-radius: 18px;
+  /* Core palette */
+  --cp-bg: #090a12;
+  --cp-surface: #10111d;
+  --cp-card: #141522;
+  --cp-border: rgba(180, 165, 255, 0.10);
+
+  --cp-text: #f1f0ff;
+  --cp-muted: #9292a8;
+
+  --cp-violet: #9870ff;
+  --cp-purple: #b59aff;
+  --cp-cyan: #65e7f5;
+
+  --cp-radius: 20px;
 
   --cp-mobile-gutter: 12px;
   --cp-tablet-gutter: 20px;
   --cp-desktop-gutter: 32px;
+
+  /* Neumorphic shadows */
+  --cp-shadow:
+    9px 9px 22px rgba(0, 0, 0, 0.48),
+    -7px -7px 20px rgba(48, 49, 75, 0.12);
+
+  --cp-shadow-inset:
+    inset 4px 4px 10px rgba(0, 0, 0, 0.38),
+    inset -3px -3px 9px rgba(58, 55, 91, 0.12);
+
+  --cp-violet-glow:
+    0 0 12px rgba(151, 112, 255, 0.35),
+    0 0 30px rgba(151, 112, 255, 0.13);
 }
 
 /* ========================================
@@ -60,19 +77,21 @@ body {
   min-height: 100vh;
   margin: 0;
   overflow-x: clip;
+
   color: var(--cp-text);
+
   background:
     radial-gradient(
-      ellipse at 15% 0%,
-      rgba(91, 33, 182, 0.14),
-      transparent 42%
+      ellipse at 50% -15%,
+      rgba(111, 75, 190, 0.17),
+      transparent 48%
     ),
     radial-gradient(
-      ellipse at 95% 35%,
-      rgba(67, 56, 202, 0.08),
-      transparent 36%
+      ellipse at 100% 50%,
+      rgba(65, 59, 120, 0.10),
+      transparent 40%
     ),
-    var(--cp-bg);
+    #090a12;
 }
 
 body,
@@ -130,16 +149,14 @@ iframe {
 }
 
 ::selection {
-  color: #ffffff;
-  background: rgba(139, 92, 246, 0.55);
+  color: white;
+  background: rgba(151, 112, 255, 0.55);
 }
 
 :focus-visible {
-  outline: 2px solid #a78bfa;
+  outline: 2px solid var(--cp-purple);
   outline-offset: 3px;
 }
-
-/* Prevent long text from forcing layouts wider. */
 
 h1,
 h2,
@@ -171,7 +188,7 @@ table {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #343052 transparent;
+  scrollbar-color: #494064 transparent;
 }
 
 *::-webkit-scrollbar {
@@ -184,24 +201,33 @@ table {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #343052;
+  background: linear-gradient(
+    180deg,
+    #9472e9,
+    #494064
+  );
   border-radius: 20px;
 }
 
 /* ========================================
-   PREMIUM REUSABLE SURFACES
+   PREMIUM NEUMORPHIC SURFACES
 ======================================== */
 
 .cp-card {
   min-width: 0;
+
   border: 1px solid var(--cp-border);
   border-radius: var(--cp-radius);
+
   background: linear-gradient(
     145deg,
-    rgba(20, 27, 48, 0.96),
-    rgba(13, 18, 34, 0.96)
+    #191a2a,
+    #11121e 60%,
+    #141522
   );
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+
+  box-shadow: var(--cp-shadow);
+
   transition:
     border-color 180ms ease,
     transform 180ms ease,
@@ -209,13 +235,41 @@ table {
 }
 
 .cp-card:hover {
-  border-color: rgba(139, 92, 246, 0.32);
+  border-color: rgba(166, 139, 255, 0.28);
 }
 
 .cp-card-interactive:hover {
   transform: translateY(-3px);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+
+  box-shadow:
+    12px 15px 32px rgba(0, 0, 0, 0.5),
+    -5px -5px 20px rgba(60, 55, 100, 0.12),
+    0 0 18px rgba(151, 112, 255, 0.08);
 }
+
+/* Inset surface for controls and panels */
+
+.cp-inset {
+  background: #10111c;
+  border: 1px solid rgba(180, 165, 255, 0.07);
+  border-radius: 16px;
+  box-shadow: var(--cp-shadow-inset);
+}
+
+/* Glass surface */
+
+.cp-glass {
+  background: rgba(24, 24, 39, 0.68);
+  border: 1px solid rgba(190, 177, 255, 0.13);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+/* Text */
 
 .cp-muted {
   color: var(--cp-muted);
@@ -223,28 +277,34 @@ table {
 
 .cp-gradient-text {
   color: var(--cp-purple);
+
   background: linear-gradient(
     100deg,
-    #c4b5fd,
-    #a78bfa 45%,
-    #67e8f9
+    #e0d4ff,
+    #a98aff 48%,
+    #6be5f5
   );
+
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+/* Gradient surfaces */
+
 .cp-gradient {
   background: linear-gradient(
     135deg,
-    #7c3aed,
-    #6d28d9 55%,
-    #4f46e5
+    #a17aff,
+    #7545db 55%,
+    #5145b9
   );
 }
 
+/* Violet glow */
+
 .cp-glow {
-  box-shadow: 0 0 35px rgba(124, 58, 237, 0.2);
+  box-shadow: var(--cp-violet-glow);
 }
 
 /* ========================================
@@ -255,12 +315,13 @@ input,
 textarea,
 select {
   max-width: 100%;
+  min-width: 0;
   color: var(--cp-text);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #64748b;
+  color: #73738b;
   opacity: 1;
 }
 
@@ -282,21 +343,13 @@ button {
   touch-action: manipulation;
 }
 
-/* Keep long form fields inside their parent containers. */
-
-input,
-textarea,
-select {
-  min-width: 0;
-}
-
 /* ========================================
    MOBILE — UP TO 639px
 ======================================== */
 
 @media (max-width: 639px) {
   :root {
-    --cp-radius: 14px;
+    --cp-radius: 15px;
   }
 
   body {
@@ -307,19 +360,13 @@ select {
     transform: none;
   }
 
-  /* Prevent hover effects from feeling sticky on touch screens. */
   .cp-card:hover {
     border-color: var(--cp-border);
   }
 
-  /* Comfortable mobile form controls. */
   input,
   select,
-  textarea {
-    max-width: 100%;
-  }
-
-  /* Ensure media and embedded content stay within the viewport. */
+  textarea,
   img,
   video,
   iframe {
@@ -333,21 +380,19 @@ select {
 
 @media (min-width: 640px) and (max-width: 1023px) {
   :root {
-    --cp-radius: 16px;
+    --cp-radius: 17px;
   }
 }
 
 /* ========================================
-   TABLET AND MOBILE — UP TO 1023px
+   TABLET AND MOBILE
 ======================================== */
 
 @media (max-width: 1023px) {
-  /* Tables may use their own horizontal scrolling wrapper. */
   table {
     font-size: 0.925rem;
   }
 
-  /* Avoid hover-only movement on touch devices. */
   .cp-card-interactive:hover {
     transform: none;
   }
@@ -359,12 +404,13 @@ select {
 
 @media (min-width: 1024px) {
   :root {
-    --cp-radius: 18px;
+    --cp-radius: 20px;
   }
 }
 
 /* ========================================
    ACCESSIBILITY
+   Preserve reduced-motion support
 ======================================== */
 
 @media (prefers-reduced-motion: reduce) {

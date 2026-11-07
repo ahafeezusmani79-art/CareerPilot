@@ -1,6 +1,5 @@
 
-
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 const navigation = [
@@ -75,7 +74,7 @@ function BrandLogo({ compact = false }) {
           compact ? "h-9 w-9" : "h-10 w-10 sm:h-14 sm:w-14"
         }`}
       >
-        <div className="absolute bottom-0 left-0 h-8 w-8 rounded-full bg-violet-500/20 blur-xl" />
+        <div className="absolute inset-0 rounded-full bg-violet-500/20 blur-xl" />
 
         <svg
           viewBox="0 0 64 64"
@@ -84,42 +83,18 @@ function BrandLogo({ compact = false }) {
           aria-label="CareerPilot launching rocket"
         >
           <defs>
-            <linearGradient
-              id="cpRocketBody"
-              x1="0%"
-              y1="100%"
-              x2="100%"
-              y2="0%"
-            >
+            <linearGradient id="cpRocketBody" x1="0%" y1="100%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#A78BFA" />
               <stop offset="100%" stopColor="#38BDF8" />
             </linearGradient>
-            <linearGradient
-              id="cpRocketFire"
-              x1="0%"
-              y1="100%"
-              x2="0%"
-              y2="0%"
-            >
+            <linearGradient id="cpRocketFire" x1="0%" y1="100%" x2="0%" y2="0%">
               <stop offset="0%" stopColor="#7C3AED" />
               <stop offset="100%" stopColor="#67E8F9" />
             </linearGradient>
           </defs>
 
-          <path
-            d="M8 53 22 39"
-            stroke="#A78BFA"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            opacity=".85"
-          />
-          <path
-            d="M8 43 15 36"
-            stroke="#38BDF8"
-            strokeWidth="2"
-            strokeLinecap="round"
-            opacity=".7"
-          />
+          <path d="M8 53 22 39" stroke="#A78BFA" strokeWidth="2.5" strokeLinecap="round" opacity=".85" />
+          <path d="M8 43 15 36" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" opacity=".7" />
 
           <g transform="rotate(42 32 32)">
             <path
@@ -129,53 +104,24 @@ function BrandLogo({ compact = false }) {
               strokeWidth="2.5"
               strokeLinejoin="round"
             />
-            <circle
-              cx="32"
-              cy="25"
-              r="5"
-              fill="#0B1020"
-              stroke="#67E8F9"
-              strokeWidth="2.5"
-            />
-            <path
-              d="M21 32 12 41 14 27 23 24"
-              fill="#8B5CF6"
-              stroke="#A78BFA"
-              strokeWidth="2"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M43 32 52 41 50 27 41 24"
-              fill="#8B5CF6"
-              stroke="#A78BFA"
-              strokeWidth="2"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M27 49 32 61 37 49"
-              fill="url(#cpRocketFire)"
-              stroke="#67E8F9"
-              strokeWidth="1.5"
-              strokeLinejoin="round"
-            />
+            <circle cx="32" cy="25" r="5" fill="#0B1020" stroke="#67E8F9" strokeWidth="2.5" />
+            <path d="M21 32 12 41 14 27 23 24" fill="#8B5CF6" stroke="#A78BFA" strokeWidth="2" strokeLinejoin="round" />
+            <path d="M43 32 52 41 50 27 41 24" fill="#8B5CF6" stroke="#A78BFA" strokeWidth="2" strokeLinejoin="round" />
+            <path d="M27 49 32 61 37 49" fill="url(#cpRocketFire)" stroke="#67E8F9" strokeWidth="1.5" strokeLinejoin="round" />
           </g>
         </svg>
       </div>
 
       <div className="min-w-0">
-        <div
-          className={`whitespace-nowrap font-extrabold tracking-tight ${
-            compact ? "text-base" : "text-lg sm:text-2xl"
-          }`}
-        >
+        <div className={`whitespace-nowrap font-extrabold tracking-tight ${compact ? "text-base" : "text-lg sm:text-2xl"}`}>
           <span className="text-white">Career</span>
-          <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-sky-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-violet-300 via-purple-400 to-cyan-300 bg-clip-text text-transparent">
             Pilot
           </span>
         </div>
 
         {!compact && (
-          <p className="mt-1 hidden whitespace-nowrap text-[9px] font-semibold tracking-[0.17em] text-slate-400 sm:block">
+          <p className="mt-1 hidden whitespace-nowrap text-[9px] font-semibold tracking-[0.17em] text-slate-500 sm:block">
             YOUR CAREER. YOUR NEXT LEVEL.
           </p>
         )}
@@ -187,6 +133,11 @@ function BrandLogo({ compact = false }) {
 export default function AppLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
+  const location = useLocation();
+
+  const currentPage =
+    navigation.find((item) => item.path === location.pathname)?.name ||
+    "Workspace";
 
   function closeSidebar() {
     setSidebarOpen(false);
@@ -197,81 +148,81 @@ export default function AppLayout() {
   }
 
   return (
-    <div className="min-h-screen min-w-0 overflow-x-clip bg-[#080B16] text-slate-100">
-      {/* Mobile and tablet backdrop */}
+    <div className="min-h-screen min-w-0 overflow-x-clip bg-[#090a12] text-[#f1f0ff]">
+
+      {/* Mobile backdrop */}
       {sidebarOpen && (
         <button
           type="button"
           aria-label="Close sidebar backdrop"
           onClick={closeSidebar}
-          className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/75 backdrop-blur-md lg:hidden"
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[min(85vw,270px)] flex-col border-r border-white/[0.07] bg-[#0C1020] transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[min(85vw,280px)] flex-col border-r border-violet-300/[0.08] bg-[#10111c] shadow-[12px_0_40px_rgba(0,0,0,0.45)] transition-transform duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } ${
-          desktopSidebarOpen
-            ? "lg:translate-x-0"
-            : "lg:-translate-x-full"
+          desktopSidebarOpen ? "lg:translate-x-0" : "lg:-translate-x-full"
         }`}
       >
-        <div className="flex h-[72px] shrink-0 items-center justify-between border-b border-white/[0.07] px-4 sm:h-[84px] sm:px-5">
+        {/* Brand */}
+        <div className="flex h-[76px] shrink-0 items-center justify-between border-b border-white/[0.06] px-5 sm:h-[84px]">
           <BrandLogo compact />
 
-          {/* Close button for mobile and tablet */}
           <button
             type="button"
             onClick={closeSidebar}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:border-violet-400/40 hover:bg-violet-500/15 hover:text-white lg:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.07] bg-[#181927] text-slate-400 transition hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-white lg:hidden"
             aria-label="Close sidebar"
             title="Close sidebar"
           >
-            <Icon name="close" size={20} />
+            <Icon name="close" size={19} />
           </button>
 
-          {/* Collapse button for desktop */}
           <button
             type="button"
             onClick={toggleDesktopSidebar}
-            className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:border-violet-400/40 hover:bg-violet-500/15 hover:text-white lg:flex"
+            className="hidden h-9 w-9 items-center justify-center rounded-xl border border-white/[0.07] bg-[#181927] text-slate-400 transition hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-white lg:flex"
             aria-label="Collapse sidebar"
             title="Collapse sidebar"
           >
-            <Icon name="close" size={20} />
+            <Icon name="close" size={19} />
           </button>
         </div>
 
-        <div className="shrink-0 px-5 pb-3 pt-7">
-          <p className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-            Workspace
+        {/* Navigation heading */}
+        <div className="shrink-0 px-5 pb-3 pt-8">
+          <p className="px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-600">
+            Main Workspace
           </p>
         </div>
 
-        <nav className="min-h-0 flex-1 space-y-1.5 overflow-y-auto overscroll-contain px-3 sm:px-4">
+        {/* Navigation */}
+        <nav className="min-h-0 flex-1 space-y-2 overflow-y-auto overscroll-contain px-4">
           {navigation.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               onClick={closeSidebar}
               className={({ isActive }) =>
-                `group flex min-h-11 items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-medium transition-all duration-200 ${
+                `group relative flex min-h-12 items-center gap-3 overflow-hidden rounded-2xl border px-4 py-3 text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? "border border-violet-400/15 bg-gradient-to-r from-violet-500/20 to-indigo-500/10 text-white shadow-[inset_3px_0_0_#A78BFA]"
-                    : "border border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-100"
+                    ? "border-violet-400/20 bg-gradient-to-r from-violet-500/20 to-indigo-500/[0.08] text-white shadow-[inset_3px_0_0_#a78bfa,0_5px_20px_rgba(124,58,237,0.10)]"
+                    : "border-transparent text-slate-500 hover:border-white/[0.06] hover:bg-[#191a29] hover:text-slate-100"
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   <span
-                    className={
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-200 ${
                       isActive
-                        ? "text-violet-300"
-                        : "text-slate-500 transition-colors group-hover:text-violet-300"
-                    }
+                        ? "bg-violet-400/15 text-violet-300 shadow-[0_0_18px_rgba(139,92,246,0.16)]"
+                        : "bg-[#191a28] text-slate-500 group-hover:text-violet-300"
+                    }`}
                   >
                     <Icon name={item.icon} size={19} />
                   </span>
@@ -279,7 +230,7 @@ export default function AppLayout() {
                   <span className="min-w-0 flex-1">{item.name}</span>
 
                   {isActive && (
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-300 shadow-[0_0_8px_#A78BFA]" />
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-violet-300 shadow-[0_0_12px_#a78bfa]" />
                   )}
                 </>
               )}
@@ -287,53 +238,62 @@ export default function AppLayout() {
           ))}
         </nav>
 
-        <div className="m-3 shrink-0 rounded-2xl border border-violet-400/10 bg-gradient-to-br from-violet-500/[0.10] to-sky-500/[0.04] p-3 sm:m-4 sm:p-4">
-          <div className="mb-2 flex items-center gap-2">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-violet-400/10 text-violet-300">
-              <Icon name="sparkles" size={17} />
+        {/* Career growth card */}
+        <div className="mx-4 mb-4 mt-5 shrink-0 rounded-2xl border border-violet-400/[0.12] bg-gradient-to-br from-[#211936] via-[#191729] to-[#111521] p-4 shadow-[8px_8px_22px_rgba(0,0,0,0.35)]">
+          <div className="mb-3 flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-violet-300/10 bg-violet-400/10 text-violet-300">
+              <Icon name="sparkles" size={18} />
             </span>
             <span className="text-sm font-semibold text-white">
               Career growth
             </span>
           </div>
+
           <p className="text-xs leading-5 text-slate-400">
             Build your skills. Track your progress. Land your next opportunity.
           </p>
+
+          <div className="mt-4 h-1 overflow-hidden rounded-full bg-white/[0.06]">
+            <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-violet-500 to-cyan-400" />
+          </div>
         </div>
 
-        <div className="shrink-0 border-t border-white/[0.07] px-5 py-3 sm:py-4">
-          <p className="text-xs text-slate-500">CareerPilot</p>
+        {/* Sidebar footer */}
+        <div className="shrink-0 border-t border-white/[0.06] px-5 py-4">
+          <p className="text-xs font-semibold text-slate-400">CareerPilot</p>
           <p className="mt-1 text-[10px] text-slate-600">
             Your personal career companion
           </p>
         </div>
       </aside>
 
-      {/* Main area */}
+      {/* Main content */}
       <div
         className={`min-h-screen min-w-0 transition-[padding] duration-300 ${
-          desktopSidebarOpen ? "lg:pl-[270px]" : "lg:pl-0"
+          desktopSidebarOpen ? "lg:pl-[280px]" : "lg:pl-0"
         }`}
       >
-        <header className="sticky top-0 z-30 border-b border-white/[0.07] bg-[#080B16]/90 backdrop-blur-2xl">
+        {/* Topbar */}
+        <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#090a12]/85 backdrop-blur-2xl">
           <div className="flex h-16 min-w-0 items-center justify-between gap-2 px-3 sm:h-[84px] sm:gap-4 sm:px-7 lg:px-10">
-            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-              {/* Mobile and tablet menu button */}
+
+            <div className="flex min-w-0 items-center gap-3">
+              {/* Mobile menu */}
               <button
                 type="button"
                 onClick={() => setSidebarOpen((open) => !open)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-slate-300 transition hover:border-violet-400/30 hover:bg-violet-400/10 lg:hidden"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/[0.07] bg-[#171825] text-slate-300 transition hover:border-violet-400/30 hover:text-violet-300 lg:hidden"
                 aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
                 aria-expanded={sidebarOpen}
               >
                 <Icon name={sidebarOpen ? "close" : "menu"} />
               </button>
 
-              {/* Desktop sidebar toggle */}
+              {/* Desktop menu */}
               <button
                 type="button"
                 onClick={toggleDesktopSidebar}
-                className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-slate-300 transition hover:border-violet-400/30 hover:bg-violet-400/10 lg:flex"
+                className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/[0.07] bg-[#171825] text-slate-300 transition hover:border-violet-400/30 hover:text-violet-300 lg:flex"
                 aria-label={
                   desktopSidebarOpen ? "Collapse sidebar" : "Expand sidebar"
                 }
@@ -342,19 +302,31 @@ export default function AppLayout() {
                 <Icon name="menu" />
               </button>
 
-              <BrandLogo />
+              <div className="hidden sm:block">
+                <BrandLogo />
+              </div>
+
+              <div className="min-w-0 sm:hidden">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                  CareerPilot
+                </p>
+                <p className="truncate text-sm font-bold text-white">
+                  {currentPage}
+                </p>
+              </div>
             </div>
 
+            {/* Topbar right */}
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-              <div className="hidden items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-2 sm:flex">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_7px_#34D399]" />
+              <div className="hidden items-center gap-2 rounded-full border border-emerald-400/10 bg-emerald-400/[0.05] px-3 py-2 sm:flex">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34D399]" />
                 <span className="text-[11px] font-medium text-emerald-300">
                   Workspace active
                 </span>
               </div>
 
               <div
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-violet-400/20 bg-gradient-to-br from-violet-500/20 to-sky-500/10 text-sm font-bold text-violet-200 sm:h-10 sm:w-10 sm:rounded-2xl"
+                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-violet-400/20 bg-gradient-to-br from-[#30234b] to-[#151a2c] text-sm font-bold text-violet-200 shadow-[0_0_18px_rgba(139,92,246,0.12)]"
                 aria-label="CareerPilot profile"
                 title="CareerPilot profile"
               >
@@ -364,7 +336,7 @@ export default function AppLayout() {
           </div>
         </header>
 
-        {/* <main className="mx-auto min-w-0 w-full max-w-[1600px] p-3 sm:p-5 md:p-7 lg:p-10"> */}
+        {/* Page content */}
         <main className="mx-auto min-w-0 w-full max-w-[1600px] overflow-x-clip p-3 sm:p-5 md:p-7 lg:p-10">
           <Outlet />
         </main>

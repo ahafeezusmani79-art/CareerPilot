@@ -2,14 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
   (import.meta.env.PROD ? "" : "http://localhost:5000");
 
 const API_URL = `${API_BASE_URL}/api/ai`;
 const CHATS_URL = `${API_BASE_URL}/api/chats`;
-
 
 const welcomeMessage = {
   role: "assistant",
@@ -136,8 +134,8 @@ function Icon({ name, className = "h-5 w-5" }) {
 function AssistantAvatar({ small = false }) {
   return (
     <div
-      className={`flex shrink-0 items-center justify-center rounded-2xl border border-violet-300/20 bg-gradient-to-br from-violet-500/20 to-sky-400/10 text-violet-200 ${
-        small ? "h-8 w-8 rounded-xl" : "h-11 w-11"
+      className={`flex shrink-0 items-center justify-center border border-violet-300/20 bg-gradient-to-br from-violet-500/20 to-sky-400/10 text-violet-200 shadow-[inset_2px_2px_6px_rgba(255,255,255,0.04),4px_4px_10px_rgba(0,0,0,0.2)] ${
+        small ? "h-9 w-9 rounded-xl" : "h-12 w-12 rounded-2xl"
       }`}
     >
       <Icon
@@ -419,46 +417,63 @@ export default function CareerAssistant() {
 
   const busy = loading || initializing || switchingChat;
 
+  const panelClass =
+    "rounded-3xl border border-white/[0.07] bg-gradient-to-br from-[#151b2d] to-[#0e1423] shadow-[12px_12px_30px_rgba(0,0,0,0.25),-4px_-4px_18px_rgba(255,255,255,0.015)]";
+
   return (
-    <div className="min-h-screen bg-[#080b16] text-white">
-      <main className="mx-auto max-w-[1600px] px-4 pt-2 pb-5 sm:px-6 sm:pt-3 sm:pb-7 lg:px-8">
-      
-{/* Back to Dashboard — visible on all screen sizes */}
-<div className="mb-3 flex justify-end">
-  <Link
-    to="/dashboard"
-    className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-slate-300 transition hover:border-violet-400/30 hover:bg-violet-400/[0.08] hover:text-white focus:outline-none focus:ring-2 focus:ring-violet-400/50"
-  >
-    <Icon name="back" className="h-4 w-4" />
-    Back to Dashboard
-  </Link>
-</div>
+    <div className="relative min-h-screen overflow-hidden bg-[#080b16] text-white">
+      <div className="pointer-events-none absolute -left-40 top-32 h-96 w-96 rounded-full bg-violet-700/[0.07] blur-[120px]" />
+      <div className="pointer-events-none absolute -right-40 top-[650px] h-96 w-96 rounded-full bg-sky-600/[0.06] blur-[120px]" />
 
-        {/* Page title */}
-        <div className="mb-5">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/[0.08] px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-violet-200">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-            Your personal career guide
-          </div>
-
-          <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
-            AI Career Assistant
-          </h1>
-
-          <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-            Get guidance on career paths, technical skills, learning
-            roadmaps, resumes, and interviews — all in one place.
-          </p>
+      <main className="relative mx-auto max-w-[1600px] px-4 pb-5 pt-4 sm:px-6 sm:pb-7 lg:px-8">
+        {/* Back navigation */}
+        <div className="mb-5 flex justify-end">
+          <Link
+            to="/dashboard"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-[#111729] px-4 py-2.5 text-sm font-semibold text-slate-300 shadow-[4px_4px_12px_rgba(0,0,0,0.2),-2px_-2px_8px_rgba(255,255,255,0.02)] transition duration-300 hover:-translate-y-0.5 hover:border-violet-400/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-violet-400/50"
+          >
+            <Icon name="back" className="h-4 w-4" />
+            Back to Dashboard
+          </Link>
         </div>
 
-        <div className="relative grid gap-5 lg:grid-cols-[280px_minmax(0,1fr)]">
+        {/* Page heading */}
+        <header className="relative mb-7 overflow-hidden rounded-[2rem] border border-white/[0.08] bg-gradient-to-br from-[#1b1935] via-[#12182a] to-[#101522] p-6 shadow-[15px_15px_40px_rgba(0,0,0,0.3),-5px_-5px_25px_rgba(255,255,255,0.015)] sm:p-8 lg:p-9">
+          <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-violet-600/15 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 right-1/4 h-48 w-48 rounded-full bg-sky-500/10 blur-3xl" />
+
+          <div className="relative">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-violet-200">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+              Your personal career guide
+            </div>
+
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h1 className="text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+                  AI Career Assistant
+                </h1>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+                  Get guidance on career paths, technical skills, learning
+                  roadmaps, resumes, and interviews — all in one place.
+                </p>
+              </div>
+
+              <div className="hidden h-20 w-20 shrink-0 items-center justify-center rounded-3xl border border-violet-300/20 bg-violet-400/[0.07] text-violet-200 shadow-[inset_4px_4px_12px_rgba(0,0,0,0.2),-3px_-3px_10px_rgba(255,255,255,0.02)] sm:flex">
+                <Icon name="sparkles" className="h-9 w-9" />
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div className="relative grid gap-5 lg:grid-cols-[290px_minmax(0,1fr)]">
           {/* Mobile sidebar backdrop */}
           {sidebarOpen && (
             <button
               type="button"
               aria-label="Close chat history"
               onClick={() => setSidebarOpen(false)}
-              className="fixed inset-0 z-30 bg-black/60 lg:hidden"
+              className="fixed inset-0 z-30 bg-black/70 backdrop-blur-sm lg:hidden"
             />
           )}
 
@@ -468,7 +483,7 @@ export default function CareerAssistant() {
               sidebarOpen
                 ? "fixed inset-y-0 left-0 z-40 flex"
                 : "hidden"
-            } top-auto h-full max-h-screen w-[min(85vw,320px)] flex-col overflow-hidden border-r border-white/[0.08] bg-[#0d1120] p-4 lg:sticky lg:top-24 lg:flex lg:h-[calc(100vh-190px)] lg:max-h-[850px] lg:w-auto lg:rounded-2xl lg:border lg:bg-gradient-to-b lg:from-[#14192a] lg:to-[#0e1220]`}
+            } top-auto h-full max-h-screen w-[min(85vw,320px)] flex-col overflow-hidden border-r border-white/[0.08] bg-[#0d1120] p-4 shadow-2xl lg:sticky lg:top-24 lg:flex lg:h-[calc(100vh-190px)] lg:max-h-[850px] lg:w-auto lg:rounded-3xl lg:border lg:bg-gradient-to-b lg:from-[#151b2d] lg:to-[#0e1423] lg:shadow-[10px_10px_30px_rgba(0,0,0,0.25),-3px_-3px_15px_rgba(255,255,255,0.015)]`}
           >
             <div className="mb-5 flex items-center justify-between gap-2">
               <div>
@@ -483,7 +498,7 @@ export default function CareerAssistant() {
                   type="button"
                   onClick={() => setSidebarOpen(false)}
                   aria-label="Close chat history"
-                  className="rounded-lg p-2 text-slate-400 hover:bg-white/[0.06] hover:text-white lg:hidden"
+                  className="rounded-lg p-2 text-slate-400 transition hover:bg-white/[0.06] hover:text-white lg:hidden"
                 >
                   <Icon name="close" className="h-4 w-4" />
                 </button>
@@ -493,7 +508,7 @@ export default function CareerAssistant() {
                   onClick={startNewChat}
                   disabled={busy}
                   title="Start a new chat"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-violet-500 px-3 py-2.5 text-sm font-bold text-white transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-3 py-2.5 text-sm font-bold text-white shadow-lg shadow-violet-950/25 transition duration-300 hover:-translate-y-0.5 hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <Icon name="plus" className="h-4 w-4" />
                   New
@@ -501,8 +516,8 @@ export default function CareerAssistant() {
               </div>
             </div>
 
-            <div className="mb-4 flex items-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.025] px-3 py-2.5">
-              <Icon name="clock" className="h-4 w-4 text-slate-500" />
+            <div className="mb-4 flex items-center gap-2 rounded-xl border border-white/[0.06] bg-[#0a0f1c] px-3 py-3 shadow-[inset_4px_4px_10px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.015)]">
+              <Icon name="clock" className="h-4 w-4 text-violet-300" />
               <span className="text-xs text-slate-400">
                 {chats.length} saved {chats.length === 1 ? "chat" : "chats"}
               </span>
@@ -516,8 +531,8 @@ export default function CareerAssistant() {
                   <div className="h-12 animate-pulse rounded-xl bg-white/[0.05]" />
                 </div>
               ) : chats.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-white/10 px-4 py-8 text-center">
-                  <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-violet-400/[0.08] text-violet-300">
+                <div className="rounded-2xl border border-dashed border-white/10 px-4 py-8 text-center">
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl border border-violet-400/15 bg-violet-400/[0.08] text-violet-300">
                     <Icon name="chat" />
                   </div>
                   <p className="text-sm font-semibold text-slate-300">
@@ -531,10 +546,10 @@ export default function CareerAssistant() {
                 chats.map((chat) => (
                   <div
                     key={chat._id}
-                    className={`group flex items-center gap-2 rounded-xl border p-2 transition ${
+                    className={`group flex items-center gap-2 rounded-xl border p-2 transition duration-300 ${
                       activeChatId === chat._id
-                        ? "border-violet-400/30 bg-violet-400/[0.09]"
-                        : "border-transparent hover:border-white/[0.06] hover:bg-white/[0.035]"
+                        ? "border-violet-400/30 bg-gradient-to-r from-violet-500/[0.13] to-indigo-500/[0.06] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.12)]"
+                        : "border-transparent hover:border-white/[0.07] hover:bg-white/[0.035]"
                     }`}
                   >
                     <button
@@ -575,7 +590,7 @@ export default function CareerAssistant() {
               </p>
             )}
 
-            <div className="mt-4 rounded-xl border border-white/[0.06] bg-gradient-to-br from-violet-500/[0.09] to-sky-400/[0.04] p-3">
+            <div className="mt-4 rounded-2xl border border-violet-400/15 bg-gradient-to-br from-violet-500/[0.09] to-sky-400/[0.04] p-3 shadow-[inset_3px_3px_8px_rgba(0,0,0,0.12)]">
               <div className="flex items-center gap-2">
                 <AssistantAvatar small />
                 <span className="text-xs font-bold text-slate-200">
@@ -589,10 +604,19 @@ export default function CareerAssistant() {
           </aside>
 
           {/* Main chat panel */}
-          <section className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#14192a] to-[#0e1220] shadow-xl shadow-black/10">
+          <section className={`${panelClass} flex min-w-0 flex-col overflow-hidden`}>
             {/* Chat header */}
-            <div className="flex items-center justify-between gap-3 border-b border-white/[0.07] px-4 py-4 sm:px-6">
+            <div className="flex items-center justify-between gap-3 border-b border-white/[0.07] bg-white/[0.015] px-4 py-4 sm:px-6">
               <div className="flex min-w-0 items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setSidebarOpen(true)}
+                  aria-label="Open chat history"
+                  className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-2 text-slate-400 transition hover:border-violet-400/30 hover:text-white lg:hidden"
+                >
+                  <Icon name="menu" className="h-4 w-4" />
+                </button>
+
                 <AssistantAvatar />
 
                 <div className="min-w-0">
@@ -600,7 +624,7 @@ export default function CareerAssistant() {
                     CareerPilot Assistant
                   </h2>
                   <div className="mt-1 flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
                     <p className="text-xs text-slate-400">
                       Career guidance assistant
                     </p>
@@ -608,7 +632,7 @@ export default function CareerAssistant() {
                 </div>
               </div>
 
-              <span className="hidden rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2 text-xs text-slate-400 sm:inline-flex">
+              <span className="hidden rounded-xl border border-white/[0.07] bg-[#0c1220] px-3 py-2 text-xs text-slate-400 sm:inline-flex">
                 {activeChatId ? "Saved conversation" : "New conversation"}
               </span>
             </div>
@@ -640,9 +664,9 @@ export default function CareerAssistant() {
                         {!isUser && <AssistantAvatar small />}
 
                         <div
-                          className={`max-w-[88%] whitespace-pre-wrap break-words rounded-2xl px-4 py-3.5 text-sm leading-7 sm:max-w-[80%] sm:px-5 ${
+                          className={`max-w-[88%] whitespace-pre-wrap break-words rounded-2xl px-4 py-3.5 text-sm leading-7 shadow-[4px_5px_15px_rgba(0,0,0,0.16)] sm:max-w-[80%] sm:px-5 ${
                             isUser
-                              ? "rounded-tr-md bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-950/20"
+                              ? "rounded-tr-md bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-violet-950/20"
                               : "rounded-tl-md border border-white/[0.07] bg-[#1a2032] text-slate-200"
                           }`}
                         >
@@ -650,7 +674,7 @@ export default function CareerAssistant() {
                         </div>
 
                         {isUser && (
-                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-sky-300/15 bg-sky-300/[0.08] text-xs font-bold text-sky-200">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-sky-300/15 bg-sky-300/[0.08] text-xs font-bold text-sky-200">
                             You
                           </div>
                         )}
@@ -697,13 +721,10 @@ export default function CareerAssistant() {
               </div>
             )}
 
-            {/* Prompt suggestions */}
-            <div className="border-t border-white/[0.07] px-4 pt-4 sm:px-6">
+            {/* Suggested prompts */}
+            <div className="border-t border-white/[0.07] bg-white/[0.01] px-4 pt-4 sm:px-6">
               <div className="mb-3 flex items-center gap-2">
-                <Icon
-                  name="sparkles"
-                  className="h-4 w-4 text-violet-300"
-                />
+                <Icon name="sparkles" className="h-4 w-4 text-violet-300" />
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
                   Try asking
                 </p>
@@ -719,9 +740,9 @@ export default function CareerAssistant() {
                       setQuestion(suggestion.prompt);
                       questionInputRef.current?.focus();
                     }}
-                    className="group flex min-w-0 items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.025] p-3 text-left transition hover:border-violet-400/25 hover:bg-violet-400/[0.06] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="group flex min-w-0 items-center gap-3 rounded-xl border border-white/[0.07] bg-[#101729]/70 p-3 text-left shadow-[4px_4px_12px_rgba(0,0,0,0.15)] transition duration-300 hover:-translate-y-0.5 hover:border-violet-400/25 hover:bg-violet-400/[0.06] disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-400/[0.08] text-lg text-violet-300 transition group-hover:bg-violet-400/[0.14]">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-violet-400/10 bg-violet-400/[0.08] text-lg text-violet-300 transition group-hover:bg-violet-400/[0.14]">
                       {suggestion.icon}
                     </span>
 
@@ -742,7 +763,7 @@ export default function CareerAssistant() {
             <div className="p-4 pt-4 sm:p-6">
               <form
                 onSubmit={sendMessage}
-                className="flex items-end gap-2 rounded-2xl border border-white/10 bg-[#090d19] p-2 transition focus-within:border-violet-400/40 focus-within:ring-4 focus-within:ring-violet-400/[0.06] sm:gap-3 sm:p-3"
+                className="flex items-end gap-2 rounded-2xl border border-white/10 bg-[#090d19] p-2 shadow-[inset_5px_5px_12px_rgba(0,0,0,0.35),inset_-3px_-3px_10px_rgba(255,255,255,0.015)] transition duration-300 focus-within:border-violet-400/40 focus-within:ring-4 focus-within:ring-violet-400/[0.06] sm:gap-3 sm:p-3"
               >
                 <textarea
                   ref={questionInputRef}
@@ -771,7 +792,7 @@ export default function CareerAssistant() {
                 <button
                   type="submit"
                   disabled={busy || !question.trim()}
-                  className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 text-sm font-bold text-white shadow-lg shadow-violet-950/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40 sm:px-5"
+                  className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 text-sm font-bold text-white shadow-lg shadow-violet-950/20 transition duration-300 hover:-translate-y-0.5 hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40 sm:px-5"
                 >
                   <span className="hidden sm:inline">
                     {loading ? "Thinking" : "Send"}

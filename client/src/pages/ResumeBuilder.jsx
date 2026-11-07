@@ -30,7 +30,7 @@ function Field({
   placeholder = "",
 }) {
   const commonClasses =
-    "mt-2 w-full rounded-xl border border-white/10 bg-[#0B1020] px-4 py-3 text-sm text-white outline-none transition duration-200 placeholder:text-slate-600 hover:border-white/20 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-400/10";
+    "mt-2 w-full rounded-xl border border-white/[0.09] bg-[#090E1B] px-4 py-3.5 text-sm text-white outline-none shadow-inner shadow-black/20 transition duration-200 placeholder:text-slate-600 hover:border-violet-400/25 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-400/10";
 
   return (
     <div className="min-w-0">
@@ -68,8 +68,8 @@ function Field({
 
 function SectionHeading({ children }) {
   return (
-    <h2 className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-300">
-      <span className="h-4 w-1 rounded-full bg-gradient-to-b from-violet-400 to-sky-400" />
+    <h2 className="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-300">
+      <span className="h-5 w-1 rounded-full bg-gradient-to-b from-violet-400 to-sky-400 shadow-sm shadow-violet-500/30" />
       {children}
     </h2>
   );
@@ -221,7 +221,7 @@ export default function ResumeBuilder() {
   if (loading) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 bg-[#080B16] text-white">
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-violet-400/20 border-t-violet-400" />
+        <div className="h-11 w-11 animate-spin rounded-full border-2 border-violet-400/15 border-t-violet-400 shadow-lg shadow-violet-500/10" />
         <p className="text-sm text-slate-400">
           Loading your saved resume...
         </p>
@@ -301,54 +301,77 @@ export default function ResumeBuilder() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <Link
             to="/dashboard"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-slate-300 transition hover:border-violet-400/30 hover:bg-violet-400/[0.06] hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-[#111827]/80 px-4 py-2.5 text-sm text-slate-300 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-0.5 hover:border-violet-400/30 hover:bg-violet-400/[0.06] hover:text-white"
           >
-            <span aria-hidden="true">←</span>
+            <span
+              aria-hidden="true"
+              className="transition-transform duration-300 group-hover:-translate-x-1"
+            >
+              ←
+            </span>
             Back to Dashboard
           </Link>
 
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-2 text-xs font-medium text-emerald-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
             Resume workspace
           </span>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#17172C] via-[#111526] to-[#0D1525] p-6 sm:p-8 lg:p-9">
-          <div className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full bg-violet-500/[0.10] blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 right-1/3 h-48 w-48 rounded-full bg-sky-500/[0.07] blur-3xl" />
+        {/* Hero section */}
+        <div className="relative isolate overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#19172F] via-[#111729] to-[#0C1423] p-6 shadow-2xl shadow-black/20 sm:p-8 lg:p-10">
+          <div className="pointer-events-none absolute -right-20 -top-28 -z-10 h-80 w-80 rounded-full bg-violet-600/[0.14] blur-[90px]" />
+          <div className="pointer-events-none absolute -bottom-32 right-1/3 -z-10 h-64 w-64 rounded-full bg-sky-500/[0.09] blur-[80px]" />
+          <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.08),transparent_45%)]" />
 
-          <div className="relative flex flex-col justify-between gap-7 lg:flex-row lg:items-center">
+          <div className="relative flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
             <div className="max-w-2xl">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/[0.08] px-3 py-1.5 text-xs font-semibold text-violet-300">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/[0.08] px-3.5 py-2 text-[11px] font-bold tracking-[0.16em] text-violet-300 shadow-lg shadow-violet-950/10">
                 <span aria-hidden="true">✦</span>
                 CAREERPILOT RESUME BUILDER
               </div>
 
-              <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.7rem]">
                 Build your next{" "}
-                <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-sky-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-violet-400 via-purple-300 to-sky-400 bg-clip-text text-transparent">
                   opportunity.
                 </span>
               </h1>
 
-              <p className="mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base">
+              <p className="mt-4 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
                 Create a professional resume, see your changes live, and
                 save your progress securely to your account.
               </p>
+
+              <div className="mt-6 flex flex-wrap gap-3 text-xs text-slate-400">
+                <span className="inline-flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2">
+                  <span className="text-violet-300">✦</span>
+                  Live preview
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2">
+                  <span className="text-sky-300">↗</span>
+                  A4 export
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2">
+                  <span className="text-emerald-300">✓</span>
+                  Secure saving
+                </span>
+              </div>
             </div>
 
-            <div className="relative w-full rounded-2xl border border-white/[0.08] bg-black/20 p-5 lg:max-w-[220px]">
+            {/* Completion card */}
+            <div className="relative w-full rounded-2xl border border-white/[0.09] bg-[#090E1B]/70 p-5 shadow-xl shadow-black/20 backdrop-blur-xl lg:max-w-[235px]">
               <div className="flex items-center justify-between gap-3">
                 <span className="text-sm font-medium text-slate-300">
                   Profile details
                 </span>
-                <span className="text-lg font-bold text-violet-300">
+                <span className="text-xl font-extrabold text-violet-300">
                   {completion}%
                 </span>
               </div>
 
               <div
-                className="mt-4 h-2 overflow-hidden rounded-full bg-white/[0.08]"
+                className="mt-5 h-2 overflow-hidden rounded-full bg-white/[0.07] shadow-inner"
                 role="progressbar"
                 aria-label="Resume details completed"
                 aria-valuenow={completion}
@@ -356,9 +379,16 @@ export default function ResumeBuilder() {
                 aria-valuemax={100}
               >
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-violet-500 to-sky-400 transition-all duration-300"
+                  className="h-full rounded-full bg-gradient-to-r from-violet-500 via-purple-400 to-sky-400 shadow-lg shadow-violet-500/30 transition-all duration-500"
                   style={{ width: `${completion}%` }}
                 />
+              </div>
+
+              <div className="mt-4 flex items-center justify-between text-xs">
+                <span className="text-slate-500">Completed fields</span>
+                <span className="font-semibold text-slate-300">
+                  {completedSections}/9
+                </span>
               </div>
 
               <p className="mt-3 text-xs leading-5 text-slate-500">
@@ -388,10 +418,10 @@ export default function ResumeBuilder() {
       {/* Editor and live preview */}
       <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         {/* Resume form */}
-        <section className="min-w-0 overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#121827] to-[#0E1320] print:hidden">
-          <div className="border-b border-white/[0.07] px-5 py-5 sm:px-7">
+        <section className="min-w-0 overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#151C2D] to-[#0D1321] shadow-2xl shadow-black/20 print:hidden">
+          <div className="border-b border-white/[0.07] bg-white/[0.015] px-5 py-5 sm:px-7">
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-violet-400/15 bg-violet-400/[0.08] text-xl text-violet-300">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-violet-400/20 bg-gradient-to-br from-violet-500/15 to-indigo-500/5 text-xl text-violet-300 shadow-inner shadow-violet-400/5">
                 <span aria-hidden="true">✎</span>
               </div>
 
@@ -406,7 +436,7 @@ export default function ResumeBuilder() {
             </div>
           </div>
 
-          <div className="space-y-7 p-5 sm:p-7">
+          <div className="space-y-8 p-5 sm:p-7">
             <div>
               <SectionHeading>Personal Details</SectionHeading>
               <div className="space-y-5">
@@ -446,7 +476,7 @@ export default function ResumeBuilder() {
               </div>
             </div>
 
-            <div className="border-t border-white/[0.06] pt-6">
+            <div className="border-t border-white/[0.06] pt-7">
               <SectionHeading>Professional Profile</SectionHeading>
               <Field
                 label="Professional Summary"
@@ -458,7 +488,7 @@ export default function ResumeBuilder() {
               />
             </div>
 
-            <div className="border-t border-white/[0.06] pt-6">
+            <div className="border-t border-white/[0.06] pt-7">
               <SectionHeading>Education & Skills</SectionHeading>
               <div className="space-y-5">
                 <Field
@@ -478,13 +508,14 @@ export default function ResumeBuilder() {
                   textarea
                   placeholder="React, JavaScript, Node.js, Express, MongoDB"
                 />
-                <p className="-mt-3 text-xs text-slate-500">
+
+                <p className="-mt-3 text-xs leading-5 text-slate-500">
                   Separate skills with commas to display them as individual tags.
                 </p>
               </div>
             </div>
 
-            <div className="border-t border-white/[0.06] pt-6">
+            <div className="border-t border-white/[0.06] pt-7">
               <SectionHeading>Experience & Projects</SectionHeading>
               <div className="space-y-5">
                 <Field
@@ -507,12 +538,13 @@ export default function ResumeBuilder() {
               </div>
             </div>
 
-            <div className="border-t border-white/[0.06] pt-6">
+            {/* Actions */}
+            <div className="border-t border-white/[0.06] pt-7">
               <button
                 type="button"
                 onClick={handleSave}
                 disabled={saving}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-5 py-3.5 font-bold text-white shadow-lg shadow-violet-950/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 via-violet-500 to-indigo-500 px-5 py-4 font-bold text-white shadow-lg shadow-violet-950/30 transition duration-300 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-xl hover:shadow-violet-900/30 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {saving ? (
                   <>
@@ -523,6 +555,9 @@ export default function ResumeBuilder() {
                   <>
                     <span aria-hidden="true">✓</span>
                     Save Resume
+                    <span className="ml-1 transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
                   </>
                 )}
               </button>
@@ -530,13 +565,13 @@ export default function ResumeBuilder() {
               <button
                 type="button"
                 onClick={handlePrint}
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3.5 font-semibold text-slate-200 transition hover:border-sky-400/30 hover:bg-sky-400/[0.05]"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.09] bg-white/[0.025] px-5 py-3.5 font-semibold text-slate-200 transition duration-300 hover:-translate-y-0.5 hover:border-sky-400/30 hover:bg-sky-400/[0.05] hover:text-white"
               >
                 <span aria-hidden="true">↓</span>
                 Print / Save as PDF
               </button>
 
-              <p className="mt-3 text-center text-xs text-slate-500">
+              <p className="mt-4 text-center text-xs leading-5 text-slate-500">
                 Your resume is saved to your account when you select Save Resume.
               </p>
             </div>
@@ -559,102 +594,104 @@ export default function ResumeBuilder() {
             </span>
           </div>
 
-          <div
-            id="resume-preview"
-            className="min-h-[700px] overflow-wrap-anywhere rounded-xl border border-white/10 bg-white p-6 text-slate-900 shadow-2xl shadow-black/20 sm:p-10 lg:p-11"
-          >
-            <div className="resume-accent border-b-2 border-violet-500 pb-5">
-              <h1 className="break-words text-3xl font-extrabold tracking-tight sm:text-4xl">
-                {resume.name || "Your Name"}
-              </h1>
+          <div className="rounded-2xl border border-white/[0.08] bg-[#111827] p-2 shadow-2xl shadow-black/25 sm:p-3">
+            <div
+              id="resume-preview"
+              className="min-h-[700px] overflow-wrap-anywhere rounded-xl border border-slate-200 bg-white p-6 text-slate-900 shadow-inner sm:p-10 lg:p-11"
+            >
+              <div className="resume-accent border-b-2 border-violet-500 pb-5">
+                <h1 className="break-words text-3xl font-extrabold tracking-tight sm:text-4xl">
+                  {resume.name || "Your Name"}
+                </h1>
 
-              <p className="resume-title mt-2 break-words text-lg font-semibold text-violet-700">
-                {resume.title || "Your Professional Title"}
-              </p>
+                <p className="resume-title mt-2 break-words text-lg font-semibold text-violet-700">
+                  {resume.title || "Your Professional Title"}
+                </p>
 
-              {(resume.email || resume.phone) && (
-                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-600">
-                  {resume.email && (
-                    <span className="break-all">{resume.email}</span>
-                  )}
-                  {resume.phone && <span>{resume.phone}</span>}
-                </div>
+                {(resume.email || resume.phone) && (
+                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-600">
+                    {resume.email && (
+                      <span className="break-all">{resume.email}</span>
+                    )}
+                    {resume.phone && <span>{resume.phone}</span>}
+                  </div>
+                )}
+              </div>
+
+              {resume.summary && (
+                <section className="mt-7">
+                  <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
+                    Professional Summary
+                  </h2>
+                  <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700">
+                    {resume.summary}
+                  </p>
+                </section>
               )}
+
+              {resume.education && (
+                <section className="mt-7">
+                  <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
+                    Education
+                  </h2>
+                  <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700">
+                    {resume.education}
+                  </p>
+                </section>
+              )}
+
+              {skills.length > 0 && (
+                <section className="mt-7">
+                  <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
+                    Skills
+                  </h2>
+
+                  <div className="flex flex-wrap gap-2">
+                    {skills.map((skill, index) => (
+                      <span
+                        key={`${skill}-${index}`}
+                        className="resume-skill break-words rounded-md border border-violet-100 bg-violet-50 px-2.5 py-1.5 text-xs font-medium text-violet-800"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {resume.experience && (
+                <section className="mt-7">
+                  <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
+                    Experience
+                  </h2>
+                  <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700">
+                    {resume.experience}
+                  </p>
+                </section>
+              )}
+
+              {resume.projects && (
+                <section className="mt-7">
+                  <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
+                    Projects
+                  </h2>
+                  <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700">
+                    {resume.projects}
+                  </p>
+                </section>
+              )}
+
+              {!resume.summary &&
+                !resume.education &&
+                skills.length === 0 &&
+                !resume.experience &&
+                !resume.projects && (
+                  <p className="mt-12 text-center text-sm leading-6 text-slate-400">
+                    Your resume sections will appear here as you fill in your
+                    information.
+                  </p>
+                )}
             </div>
-
-            {resume.summary && (
-              <section className="mt-7">
-                <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
-                  Professional Summary
-                </h2>
-                <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700">
-                  {resume.summary}
-                </p>
-              </section>
-            )}
-
-            {resume.education && (
-              <section className="mt-7">
-                <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
-                  Education
-                </h2>
-                <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700">
-                  {resume.education}
-                </p>
-              </section>
-            )}
-
-            {skills.length > 0 && (
-              <section className="mt-7">
-                <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
-                  Skills
-                </h2>
-
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((skill, index) => (
-                    <span
-                      key={`${skill}-${index}`}
-                      className="resume-skill break-words rounded-md border border-violet-100 bg-violet-50 px-2.5 py-1.5 text-xs font-medium text-violet-800"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {resume.experience && (
-              <section className="mt-7">
-                <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
-                  Experience
-                </h2>
-                <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700">
-                  {resume.experience}
-                </p>
-              </section>
-            )}
-
-            {resume.projects && (
-              <section className="mt-7">
-                <h2 className="resume-divider mb-3 border-b border-slate-200 pb-2 text-sm font-bold uppercase tracking-[0.12em]">
-                  Projects
-                </h2>
-                <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700">
-                  {resume.projects}
-                </p>
-              </section>
-            )}
-
-            {!resume.summary &&
-              !resume.education &&
-              skills.length === 0 &&
-              !resume.experience &&
-              !resume.projects && (
-                <p className="mt-12 text-center text-sm leading-6 text-slate-400">
-                  Your resume sections will appear here as you fill in your
-                  information.
-                </p>
-              )}
           </div>
 
           <p className="mt-4 text-center text-xs leading-5 text-slate-500 print:hidden">
